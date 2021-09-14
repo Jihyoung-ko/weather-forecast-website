@@ -1,5 +1,6 @@
 
 import './App.css';
+import { Forecast} from './components/Forecast/Forecast';
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
         <h1>Weather App</h1>
       </header>
       <main>
-
+        <Forecast/>
       </main>
       
     </div>
