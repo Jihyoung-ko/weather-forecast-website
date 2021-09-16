@@ -4,9 +4,9 @@ import { Current } from './components/Current/Current';
 import { Forecast } from './components/Forecast/Forecast';
 
 const App = () => {
-  const [lat, setLat] = useState([]);
-  const [long, setLong] = useState([]);
-  const [data, setData] = useState([]);
+  const [lat, setLat] = useState(0);
+  const [long, setLong] = useState(0);
+  const [data, setData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(()=> {
@@ -28,24 +28,33 @@ const App = () => {
     getData();
   }, [lat, long]);
 
+  const renderHeader = () => {
+    return <header className="App-header">
+    <h1>Weather App</h1>
+  </header>
+  }
+
+  const renderForecast = () => {
+    if(isLoading){
+      return <p>Loading...</p> 
+    }else{
+      if(data){
+        return <div>
+
+        <Current data={data} />
+        <Forecast data={data.hourly} type="Hourly" />
+        <Forecast data={data.daily} type="Daily" />
+    
+      </div>
+      }
+    }
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Weather App</h1>
-      </header>
+      {renderHeader()}
       <main>
-      {isLoading ? ( 
-          <p>Loading...</p> 
-       ) : (
-         <div>
-
-          <Current data={data} />
-          <Forecast data={data.hourly} type="Hourly" />
-          <Forecast data={data.daily} type="Daily" />
-      
-        </div>
-       )}
-        
+        {renderForecast()}  
       </main>
       
     </div>
