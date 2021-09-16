@@ -7,9 +7,11 @@ const App = () => {
   const [lat, setLat] = useState([]);
   const [long, setLong] = useState([]);
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(()=> {
     const getData = async () => {
+      setIsLoading(true);
       navigator.geolocation.getCurrentPosition(function(position) {
       setLat(position.coords.latitude);
       setLong(position.coords.longitude);
@@ -19,6 +21,7 @@ const App = () => {
         .then(res =>res.json())
         .then(result => {
           setData(result)
+          setIsLoading(false)
           console.log(result)
         });
     }
@@ -31,11 +34,18 @@ const App = () => {
         <h1>Weather App</h1>
       </header>
       <main>
-        <div>
+      {isLoading ? ( 
+          <p>Loading...</p> 
+       ) : (
+         <div>
+
           <Current data={data} />
+          <Forecast data={data.hourly} type="Hourly" />
           <Forecast data={data.daily} type="Daily" />
       
         </div>
+       )}
+        
       </main>
       
     </div>
