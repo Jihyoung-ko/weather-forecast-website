@@ -6,11 +6,12 @@ import { Forecast } from './components/Forecast/Forecast';
 const App = () => {
   const [lat, setLat] = useState(0);
   const [long, setLong] = useState(0);
+  const [city, setCity] = useState(undefined);
   const [data, setData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(()=> {
-    const getData = async () => {
+    const getDataByLocation = async () => {
       setIsLoading(true);
       navigator.geolocation.getCurrentPosition(function(position) {
       setLat(position.coords.latitude);
@@ -25,12 +26,26 @@ const App = () => {
           console.log(result)
         });
     }
-    getData();
+    getDataByLocation();
   }, [lat, long]);
+
+
+  const searchLocation = () => {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=6fde6b33e376e50371677db95126f6fd`)
+        .then(res => res.json())
+        .then(result => {
+          setData(result)
+          console.log(result)
+        });
+  }
 
   const renderHeader = () => {
     return <header className="App-header">
     <h1>Weather App</h1>
+    <div>
+      <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder="Enter Location" />
+      <button onClick={searchLocation}> Search</button>
+    </div>
   </header>
   }
 

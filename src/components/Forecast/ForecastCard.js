@@ -4,7 +4,7 @@ export const ForecastCard = ({ data, type }) => {
 
   const renderHourlyCard = () => {
     return <div>
-    <h4>{new Date(data.dt * 1000).toLocaleTimeString(['en-US'], {hour: '2-digit', hour12: true})}</h4>
+    <p>{new Date(data.dt * 1000).toLocaleTimeString(['en-US'], {hour: '2-digit', hour12: true})}</p>
     <h3>{ Math.round( data.temp )}&deg; </h3>
   </div>
   }
