@@ -18,7 +18,7 @@ const App = () => {
       setLong(position.coords.longitude);
       });
 
-      await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&units=metric&appid=6fde6b33e376e50371677db95126f6fd`)
+      await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&units=metric&appid=${process.env.API_KEY}`)
         .then(res =>res.json())
         .then(result => {
           setData(result)
@@ -31,7 +31,7 @@ const App = () => {
 
 
   const searchLocation = () => {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=6fde6b33e376e50371677db95126f6fd`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.API_KEY}`)
         .then(res => res.json())
         .then(result => {
           setData(result)
